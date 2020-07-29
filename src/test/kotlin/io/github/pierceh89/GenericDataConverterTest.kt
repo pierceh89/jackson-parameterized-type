@@ -36,5 +36,20 @@ class GenericDataConverterTest {
         val ret = converter.convert(fooJson)
 
         Assert.assertEquals(ret, Foo("abc", "abc"))
+        converter.run(fooJson)
+    }
+
+    @Test
+    fun testSimpleDataTypeConverter() {
+        val fooJson = """
+            {
+              "a": "abc",
+              "b": "abc"
+            }  
+        """.trimIndent()
+
+        val ret = convert<Foo>(fooJson)
+        Assert.assertEquals(ret, Foo("abc", "abc"))
+
     }
 }

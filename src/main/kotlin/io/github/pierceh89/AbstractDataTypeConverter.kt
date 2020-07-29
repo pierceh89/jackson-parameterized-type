@@ -11,6 +11,13 @@ abstract class AbstractDataTypeConverter<T> {
     fun convert(jsonStr: String): T {
         return om.readValue(jsonStr, type())
     }
+
+    protected abstract fun doSomething(value: T)
+
+    fun run(jsonStr: String) {
+        val parsed = convert(jsonStr)
+        doSomething(parsed)
+    }
 }
 
 class FooDataTypeConverter : AbstractDataTypeConverter<Foo>() {
@@ -19,6 +26,10 @@ class FooDataTypeConverter : AbstractDataTypeConverter<Foo>() {
     override fun type(): TypeReference<Foo> {
         return typeReference
     }
+
+    override fun doSomething(value: Foo) {
+        println(value)
+    }
 }
 
 class BarDataTypeConverter : AbstractDataTypeConverter<Bar>() {
@@ -26,5 +37,9 @@ class BarDataTypeConverter : AbstractDataTypeConverter<Bar>() {
 
     override fun type(): TypeReference<Bar> {
         return typeReference
+    }
+
+    override fun doSomething(value: Bar) {
+        println(value)
     }
 }
